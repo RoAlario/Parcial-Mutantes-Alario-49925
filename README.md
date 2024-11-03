@@ -1,5 +1,7 @@
-# Parcial Rocio Alario - 49925
-
+# Parcial Rocio Alario - 49925  
+Este proyecto es una API desarrollada en Java y Spring Boot que analiza secuencias de ADN para determinar si son mutantes. La API también ofrece estadísticas sobre los análisis realizados y cuenta con pruebas automáticas y un reporte de cobertura de código. A continuación, se describe la configuración, el uso de la API y los resultados de las pruebas de rendimiento.  
+### Más info:    
+Si quiere informacion más detallada, puede consultar el PDF "Informe parcial desarrollo" en donde se especifica bien paso a paso como usar la API y se muestra el code coverage, los test de stress y los test automáticos.   
 # Antes de empezar
 **⚠️ IMPORTANTE: ⚠️**  
 **<span style="font-size: 1.2em">Cuando se ingrese un adn en postman, el campo de ADN debe comenzar con la palabra clave `"adn"` para que sea considerado válido por la API.En caso de que empiece por ejemplo con la palabra `"dna"` no será considerado válido. </span>**  
@@ -10,19 +12,58 @@
   {
     "adn": ["ATGCGA", "CAGTGC", "TTATGT", "AGAAGG", "CCCCTA", "TCACTG"]
   }
-  
-Este proyecto es una API desarrollada en Java y Spring Boot que analiza secuencias de ADN para determinar si son mutantes. La API también ofrece estadísticas sobre los análisis realizados y cuenta con pruebas automáticas y un reporte de cobertura de código. A continuación, se describe la configuración, el uso de la API y los resultados de las pruebas de rendimiento.  
-### Más info:    
-Si quiere informacion más detallada, puede consultar el PDF "Informe parcial desarrollo" en donde se especifica bien paso a paso como usar la API y se muestra el code coverage, los test de stress y los test automáticos.   
 
-## Configuración General
+  
+ # EN REMOTO:  
+ 
+# Configuración General EN REMOTO (RENDER):
+
+1. **Abrir Postman**
+   
+2. **Usar la siguiente URL**:
+   https://api-mutantes-alario-xf5x.onrender.com
+   
+3. **En postman, para hacer un post hacer Endpoint POST poner el siguiente URL y enviarle el adn que se va a verificar**:  
+  https://api-mutantes-alario-xf5x.onrender.com/mutant
+   
+4. **En postman, para hacer un post hacer Endpoint GET y poner la siguiente URL y le dirá las estadisticas**:  
+   https://api-mutantes-alario-xf5x.onrender.com/stats
+
+## Consideraciones:
+
+- **En este repositorio se encuentra el repositorio de la API con render**
+  https://github.com/RoAlario/Parcial-Mutantes-con-RENDER
+
+**⚠️ IMPORTANTE: si no le funciona tal vez deberá cambiar el archivo "application.properties" y poner lo siguiente ⚠️**   
+
+spring.application.name=ParcialAlario49925
+spring.h2.console.enabled=true
+spring.datasource.url=${DATABASE_URL:jdbc:h2:file:./data/testdb}
+spring.datasource.driverClassName=org.h2.Driver
+spring.datasource.username=${DB_USER:sa}
+spring.datasource.password=${DB_PASSWORD:}
+spring.jpa.database-platform=org.hibernate.dialect.H2Dialect
+spring.jpa.hibernate.ddl-auto=${DDL_AUTO:create} 
+spring.jpa.show-sql=true
+server.port=${PORT:8080}
+springdoc.swagger-ui.enabled=true
+springdoc.api-docs.enabled=true
+springdoc.swagger-ui.path=/swagger-ui.html
+springdoc.api-docs.path=/api-docs
+
+**Tambien por las dudas cambiar en el archivo Base la generacion del ID**     
+@GeneratedValue(strategy = GenerationType.IDENTITY)  
+
+
+ # EN LOCAL:    
+## Configuración General EN LOCAL:
 
 1. **Abrir el proyecto en IntelliJ**:
    - Abre la carpeta del proyecto en IntelliJ.
    - Ejecuta el archivo `ParcialAlario49925Application.java`.
    - Deberías ver un mensaje que dice "Estoy Andando" al iniciar.
 
-## Configuración en Postman
+## Configuración en Postman (LOCAL)
 
 2. **Instrucciones en Postman**:
    - La API cuenta con dos endpoints: `POST` para cargar ADN y `GET` para obtener estadísticas.
@@ -35,7 +76,7 @@ Si quiere informacion más detallada, puede consultar el PDF "Informe parcial de
    - URL: `http://localhost:8080/stats`
    - Muestra estadísticas sobre la cantidad de ADN mutante y humano cargado en la base de datos.
 
-## Configuración de la Base de Datos H2
+## Configuración de la Base de Datos H2 (LOCAL)
 
 5. **Conectar a H2**:
    - Abre la consola H2 en tu navegador con la URL: `http://localhost:8080/h2-console/`.
@@ -49,7 +90,7 @@ Si quiere informacion más detallada, puede consultar el PDF "Informe parcial de
 6. **Consultar la Tabla de ADN**:
    - Para ver los ADN cargados, ejecuta la consulta `SELECT * FROM ADN` en la consola de H2.
 
-## Uso de la API
+## Uso de la API EN LOCAL
 
 1. **Ejecutar el archivo `ParcialAlario49925Application.java`**:
    - Asegúrate de que el archivo está en ejecución para usar la API.
@@ -60,7 +101,6 @@ Si quiere informacion más detallada, puede consultar el PDF "Informe parcial de
 
 3. **Instrucción GET en Postman**:
    - En la sección de GET, haz clic en "Send" para recibir estadísticas sobre el número de mutantes y humanos, así como el ratio entre ambos.
-
 
 
 ## Pruebas de Rendimiento y Fluctuaciones
